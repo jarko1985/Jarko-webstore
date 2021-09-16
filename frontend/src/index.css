@@ -53,3 +53,11 @@ h2 {
   width: 200px;
   height: 120px;
 }
+
+.product-image {
+  overflow: hidden;
+  transition: transform 0.5s ease;
+}
+.product-image:hover {
+  transform: scale(1.1);
+}

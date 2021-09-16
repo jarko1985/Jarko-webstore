@@ -6,6 +6,9 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { register } from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Slide } from "react-toastify";
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState("");
@@ -16,11 +19,12 @@ const RegisterScreen = ({ location, history }) => {
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, userInfo, error } = userRegister;
-
   const redirect = location.search ? location.search.split("=")[1] : "/";
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      setTimeout(() => {
+        history.push(redirect);
+      }, 2000);
     }
   }, [history, userInfo, redirect]);
 
@@ -30,6 +34,7 @@ const RegisterScreen = ({ location, history }) => {
       setMessage("Passwords do not match");
     } else {
       dispatch(register(name, email, password));
+      toast.success("User registered successfully");
     }
   };
 
@@ -88,6 +93,11 @@ const RegisterScreen = ({ location, history }) => {
           </Link>
         </Col>
       </Row>
+      <ToastContainer
+        position={toast.POSITION.TOP_CENTER}
+        autoClose={2000}
+        transition={Slide}
+      />
     </FormContainer>
   );
 };

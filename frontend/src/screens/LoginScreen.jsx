@@ -53,7 +53,7 @@ const LoginScreen = ({ location, history }) => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button className="my-3" type="submit" variant="primary">
+        <Button className="btn-sm my-3" type="submit" variant="primary">
           Sign In
         </Button>
       </Form>
@@ -61,7 +61,9 @@ const LoginScreen = ({ location, history }) => {
         <Col>
           New Customer ?{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : `/register`}>
-            Register
+            <Button variant="primary" className="btn-sm my-3">
+              Register
+            </Button>
           </Link>
         </Col>
       </Row>

@@ -12,10 +12,11 @@ const Home = ({ match }) => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
   const allCategories = [
     ...new Set(products.map((product) => product.category)),
   ];
-  console.log(allCategories);
+
   useEffect(() => {
     dispatch(listProducts(keyword));
   }, [dispatch, keyword]);
