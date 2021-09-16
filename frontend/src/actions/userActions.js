@@ -26,6 +26,7 @@ import {
   USER_UPDATE_BYADMIN_FAIL,
   USER_UPDATE_BYADMIN_RESET,
 } from "../constants/userConstants";
+import { MY_ORDER_LIST_RESET } from "../constants/orderConstants";
 import axios from "axios";
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -151,8 +152,14 @@ export const updateUserDetails = (user) => async (dispatch, getState) => {
 
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("userInfo");
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("shippingAddress");
+  localStorage.removeItem("paymentMethod");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: MY_ORDER_LIST_RESET });
   dispatch({ type: USER_LIST_RESET });
+  document.location.href = "/login";
 };
 
 //ADMIN ACTIONS

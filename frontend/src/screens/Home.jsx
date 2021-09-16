@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import ProductCarousel from "../components/ProductCarousel";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,10 +12,22 @@ const Home = ({ match }) => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-
+  const allCategories = [
+    ...new Set(products.map((product) => product.category)),
+  ];
+  console.log(allCategories);
   useEffect(() => {
     dispatch(listProducts(keyword));
   }, [dispatch, keyword]);
+
+  let filteredProducts = [];
+
+  const handleFilter = (filterName) => {
+    filteredProducts = products.filter(
+      (product) => product.category === filterName
+    );
+    console.log(filteredProducts);
+  };
 
   return (
     <>
@@ -26,13 +38,28 @@ const Home = ({ match }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={3}>
-              <Product product={product} />
+        <>
+          <Row>
+            <Col className="d-flex justify-content-around" md={12}>
+              {allCategories.map((cat, index) => (
+                <Button
+                  key={index}
+                  variant="primary"
+                  onClick={() => handleFilter("Cloth")}
+                >
+                  {cat}
+                </Button>
+              ))}
             </Col>
-          ))}
-        </Row>
+          </Row>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        </>
       )}
     </>
   );
